@@ -1,3 +1,5 @@
+const createShape = require('./lib/createshape');
+const FileService = require('./lib/classes/fileservice');
 const questions = require('./lib/questions');
 const inquirer = require('inquirer');
 
@@ -6,6 +8,9 @@ const promptUser = () => {
     .prompt([...questions])
     .then((answers) => {
       console.log(answers);
+      const shape = createShape(answers);
+      const fileService = new FileService('./examples/logo.svg', shape);
+      fileService.writeToFile();
     })
     .catch((error) => {
       if (error.isTtyError) {
